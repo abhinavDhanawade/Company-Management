@@ -1,0 +1,161 @@
+{% extends 'management/base.html' %}
+{% load static %}
+{% block content %}
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Company</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+        data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    {% if user.is_authenticated %}
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a href="{%url 'handlelogout'%}" class="btn btn-sm btn-primary">Log Out</a>
+        </li>
+    </ul>
+    {% endif %}
+
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse ">
+            <div class="sidebar-sticky pt-3 ">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="fa fa-globe mr-1" aria-hidden="true"></i>
+                            Dashboard <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a class="nav-link " href="{% url 'main_page' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-home">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            Visit Site
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Dashboard</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn mr-2">
+                        <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
+                            data-target="#centralModalSm">Add Employee</button>
+                        <a class="btn btn-md btn-success mx-1" href="{% url 'profile' %}">
+                            Update Manager Details
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    <b>Employee List </b></div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>EMP ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Mobile</th>
+                                    <th>DOB</th>
+                                    <th>City</th>
+                                    <th>Address</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for sc in emp %}
+                                <tr>
+                                    <td>{{ sc.empId }}</td>
+                                    <td>{{sc.firstname}}</td>
+                                    <td>{{sc.lastname}}</td>
+                                    <td>{{ sc.mobile }}</td>
+                                    <td>{{sc.dob}}</td>
+                                    <td>{{sc.city}}</td>
+                                    <td>{{sc.address}}</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="{% url 'edit_emp' qid=sc.empId %}">Edit</a>
+                                        <button class="btn btn-danger" data-toggle="modal"
+                                            data-target="#centralModalSmmdelete">Delete</button>
+                                        <div class="modal fade" id="centralModalSmmdelete" tabindex="-1" role="dialog"
+                                            aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-md" role="document">
+                                                <div class="modal-content">
+                                                    <div
+                                                        class="modal-header bg-secondary text-white text-center border-0">
+                                                        <h4 class="modal-title w-100" id="myModalLabel">Confirmation
+                                                        </h4>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body mx-5">
+                                                        <h6>Are you sure you want to delete employee ?</h6>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a class="btn btn-danger"
+                                                            href="{% url 'delete_emp' qid=sc.empId %}">Yes</a>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <p>No Employee Added</p>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Central Modal Small -->
+        <div class="modal fade" id="centralModalSm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-secondary text-white text-center">
+                        <h4 class="modal-title w-100" id="myModalLabel">Add New Employee</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mx-5">
+                        <form action="" method="POST" class="form-group">
+                            {% csrf_token %}
+                            {{form}}
+                            <div class="modal-footer">
+                                {% if edit_emp %}
+                                <button type="submit" class="btn btn-lg btn-primary">Update</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-md btn-block btn-primary">ADD</button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Central Modal Small -->
+    </div>
+</div>
+{% endblock %}

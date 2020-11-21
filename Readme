@@ -1,0 +1,25 @@
+#Name
+Django  App(Task)
+This is an example Django app that uses Django UI for website representation & Django Rest Framework is used to create Apis.
+
+
+#Description
+In this project there are two apps
+1) management:
+    This app provides us WebGui feature from were we can visit multiple page and also perform provided CRUD operations.
+2) empapi:
+    This app also use to create apis using DRF(Django Rest Framework), through which we can perform operations mention below.
+    GET, PUT, DELETE, POST.
+    This operation performance is tested using Postman tool.
+
+#Installation
+    required lib are fetched in requirement.txt
+
+    Admin
+    username:abhinav
+    password:147852369
+
+
+
+Project status
+According to task i have provided Rest Api feature and also well performing webapp.

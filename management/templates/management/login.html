@@ -29,9 +29,7 @@
                 </li>
 
                 <li class="nav-item mx-2">
-                    <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
-                        data-target="#signupModal">Sign
-                        up</button>
+                        <a href="{% url 'register' %}" class="btn btn-md btn-primary">Sign Up</a>
                 </li>
                 {% endif %}
             </ul>
@@ -48,57 +46,5 @@
                     »</a>
             </div>
         </main>
-        <header class="blog-header py-3">
-            <div class="row flex-nowrap justify-content-between align-items-center">
-                <div class="col-2 pt-1">
-                    <!-- Modal -->
-                    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="signupModal">Sign Up</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{% url 'handlesignup' %}" method="POST">
-                                        <div class="form-group">
-                                            <label for="fullname">Full name</label>
-                                            <input type="text" class="form-control" id="name" name="fullname"
-                                                placeholder="Full name" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="username">User name</label>
-                                            <input type="text" class="form-control" id="username" name="username"
-                                                placeholder="choose unique username" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email Address</label>
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="name@example.com" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pass1">Password</label>
-                                            <input type="password" class="form-control" id="pass1" name="pass1"
-                                                placeholder="Enter your password" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pass2">Confirm Password</label>
-                                            <input type="password" class="form-control" id="pass2" name="pass2"
-                                                placeholder="Re-Enter your password" required>
-                                        </div>
-                                        {% csrf_token %}
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
 </section>
 {% endblock %}

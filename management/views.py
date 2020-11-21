@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect,HttpResponse
 from django.shortcuts import render,get_object_or_404
-from management.forms import EmployeForm, ManagerForm
+from management.forms import EmployeForm, ManagerForm,CreateUserForm
 from .models import Employe, Managerr
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+
 
 # Create your views here.
 
@@ -62,24 +64,19 @@ def edit_emp(request, qid):
         return redirect('main_page')
 
 
-#Signup
-def handlesignup(request):
+
+def registerPage(request):
+    form = CreateUserForm()
     if request.method == 'POST':
-        fullname = request.POST.get('fullname')
-        username = request.POST.get('username').lower()
-        email = request.POST.get('email')
-        pass1 = request.POST.get('pass1')
-        pass2 = request.POST.get('pass2')
-        if len(username) > 10:
-            return redirect('main_page')
-        if pass1 != pass2:
-            return redirect('main_page')
-        myuser = User.objects.create_user(username, email, pass1)
-        myuser.first_name, myuser.last_name = fullname.split(" ")
-        myuser.save()        
-        return redirect('main_page')
-    else:
-        return HttpResponse('sorry')
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            return redirect('login')
+
+    context = {'form': form}
+    return render(request, 'management/register.html', context)
+
 
 
 
@@ -94,7 +91,7 @@ def managerProfile(request):
                 manaform = manaform.save(commit=False)
                 manaform.firstname = request.user.first_name
                 manaform.lastname = request.user.last_name
-                manaform.user = request.user.email
+                manaform.email = user.email
                 manaform.save()
                 manaform = ManagerForm()
                 return redirect('home')

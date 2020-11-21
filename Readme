@@ -7,10 +7,16 @@ This is an example Django app that uses Django UI for website representation & D
 In this project there are two apps
 1) management:
     This app provides us WebGui feature from were we can visit multiple page and also perform provided CRUD operations.
+    django bulit-in authentication is used for security purpose.
 2) empapi:
     This app also use to create apis using DRF(Django Rest Framework), through which we can perform operations mention below.
     GET, PUT, DELETE, POST.
     This operation performance is tested using Postman tool.
+
+    Api Urls:
+    Employe List: http://127.0.0.1:8000/api/emplist
+    Employe Details: http://127.0.0.1:8000/api/details/1
+    
 
 #Installation
     required lib are fetched in requirement.txt

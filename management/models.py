@@ -19,7 +19,7 @@ class Employe(models.Model):
 
 
 class Managerr(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    email = models.EmailField(max_length=100, primary_key=True,default="")
     firstname = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
     mobile = models.IntegerField(validators=[MaxValueValidator(9999999999)])

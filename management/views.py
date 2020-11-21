@@ -81,24 +81,7 @@ def handlesignup(request):
     else:
         return HttpResponse('sorry')
 
-#Login
-def handlelogin(request):
-    if request.method == 'POST':
-        loginusername = request.POST.get('loginusername').lower()
-        loginpass = request.POST.get('loginpass')
-        user = authenticate(username=loginusername, password=loginpass)
-        if user is not None:
-            login(request, user)
-            return redirect('home')
-        else:
-            return render(request, 'main_page')
-    else:
-        return redirect('handlelogin')
 
-#LogOut
-def handlelogout(request):
-    logout(request)
-    return redirect('main_page')
 
 def managerProfile(request):
     user = request.user
